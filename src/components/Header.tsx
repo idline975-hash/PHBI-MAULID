@@ -78,7 +78,7 @@ export const Header: React.FC<{ onOpenReportModal?: (type: string) => void }> = 
             <div className="relative group shrink-0">
               <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl overflow-hidden border-2 border-indigo-600 shadow-md bg-white flex items-center justify-center p-0.5">
                 <img
-                  src="/src/assets/images/logo_phbi_maulid_1792487457839.jpg"
+                  src="/assets/aistudio/file_000000009fc8821184f6fbe7af68d760_b9edd21b.png"
                   alt="Logo PHBI Panitia Maulid Nabi"
                   className="w-full h-full object-cover rounded-xl group-hover:scale-105 transition-transform duration-300"
                   onError={(e) => {

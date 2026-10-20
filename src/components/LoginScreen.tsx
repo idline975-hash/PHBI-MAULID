@@ -150,7 +150,7 @@ export const LoginScreen: React.FC = () => {
           <div className="inline-block relative mb-3">
             <div className="w-20 h-20 sm:w-24 sm:h-24 mx-auto rounded-3xl overflow-hidden border-2 border-indigo-600 shadow-xl bg-white p-1">
               <img
-                src="/src/assets/images/logo_phbi_maulid_1792487457839.jpg"
+                src="/assets/aistudio/file_000000009fc8821184f6fbe7af68d760_b9edd21b.png"
                 alt="Logo PHBI"
                 className="w-full h-full object-cover rounded-2xl"
               />

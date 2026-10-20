@@ -135,7 +135,7 @@ export const OfficialReportModal: React.FC<OfficialReportModalProps> = ({
             <div className="flex items-center justify-between gap-4">
               <div className="w-20 h-20 shrink-0">
                 <img
-                  src="/src/assets/images/logo_phbi_maulid_1792487457839.jpg"
+                  src="/assets/aistudio/file_000000009fc8821184f6fbe7af68d760_b9edd21b.png"
                   alt="Logo PHBI"
                   className="w-full h-full object-contain"
                 />
@@ -156,7 +156,7 @@ export const OfficialReportModal: React.FC<OfficialReportModalProps> = ({
               </div>
               <div className="w-20 h-20 shrink-0 hidden sm:block">
                 <img
-                  src="/src/assets/images/logo_phbi_maulid_1792487457839.jpg"
+                  src="/assets/aistudio/file_000000009fc8821184f6fbe7af68d760_b9edd21b.png"
                   alt="Logo PHBI"
                   className="w-full h-full object-contain opacity-90"
                 />
