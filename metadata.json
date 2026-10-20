@@ -1,0 +1,8 @@
+{
+  "name": "Remix Remix PHBI Maulid Management System",
+  "description": "Streamlined platform for managing Prophet Muhammad birthday contributions, donation tracking, expense reporting, and multi-user administrative financial control.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

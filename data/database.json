@@ -1,0 +1,109 @@
+{
+  "targetPerOrang": 150000,
+  "warga": [
+    {
+      "id": "warga_1792493521305_od8n",
+      "nama": "Agus",
+      "mingguan": [
+        50000,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "createdAt": "Selasa, 20 Oktober 2026, 17:51:59 WIB",
+      "createdTimestamp": 1792493521305,
+      "createdBy": "Usser 1 (Petugas Usser 1)",
+      "riwayatPembayaran": [
+        {
+          "minggu": 1,
+          "jumlah": 50000,
+          "tanggal": "Selasa, 20 Oktober 2026, 17:51:59 WIB",
+          "dicatatOleh": "Usser 1 (Petugas Usser 1)"
+        }
+      ]
+    }
+  ],
+  "donasiSukarela": [],
+  "pengeluaran": [],
+  "users": [
+    {
+      "id": "usr_admin",
+      "username": "riyan",
+      "name": "Riyan (Administrator)",
+      "role": "admin",
+      "userSubtype": "Admin",
+      "password": "123456",
+      "createdAt": "2026-10-20 00:00:00"
+    },
+    {
+      "id": "usr_1",
+      "username": "usser1",
+      "name": "Usser 1 - RT 08",
+      "role": "usser",
+      "userSubtype": "Usser 1 - RT 08",
+      "password": "123",
+      "createdAt": "2026-10-20 00:00:00"
+    },
+    {
+      "id": "usr_2",
+      "username": "usser2",
+      "name": "Usser 2 - RT 09",
+      "role": "usser",
+      "userSubtype": "Usser 2 - RT 09",
+      "password": "123",
+      "createdAt": "2026-10-20 00:00:00"
+    },
+    {
+      "id": "usr_3",
+      "username": "usser3",
+      "name": "Usser 3 - RT 10",
+      "role": "usser",
+      "userSubtype": "Usser 3 - RT 10",
+      "password": "123",
+      "createdAt": "2026-10-20 00:00:00"
+    },
+    {
+      "id": "usr_bendahara",
+      "username": "bendahara",
+      "name": "Bendahara PHBI",
+      "role": "bendahara",
+      "userSubtype": "Bendahara",
+      "password": "123",
+      "createdAt": "2026-10-20 00:00:00"
+    }
+  ],
+  "auditLogs": [
+    {
+      "id": "log_1792493521305",
+      "action": "Input Donasi Warga Baru",
+      "actor": "Usser 1 (Petugas Usser 1)",
+      "role": "creator",
+      "targetType": "warga",
+      "detail": "Mendaftarkan warga baru: \"Agus\" Minggu ke-1 Rp 50.000",
+      "timestamp": 1792493521313,
+      "tanggalStr": "Selasa, 20 Oktober 2026, 17:51:59 WIB"
+    },
+    {
+      "id": "log_init",
+      "action": "Sistem Diinisialisasi",
+      "actor": "System",
+      "role": "system",
+      "targetType": "system",
+      "detail": "Sistem Iuran Maulid Nabi PHBI Kp Kedung Sapi siap digunakan.",
+      "timestamp": 1792487990681,
+      "tanggalStr": "Selasa, 20 Oktober 2026, 00:00:00 WIB"
+    }
+  ],
+  "lastUpdated": 1792493521313
+}
