@@ -122,9 +122,14 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       setIsSyncing(true);
       const res = await fetch('/api/state');
       if (res.ok) {
-        const data = await res.json();
-        setState(data);
-        setLastSyncTime(new Date());
+        const text = await res.text();
+        try {
+          const data = JSON.parse(text);
+          setState(data);
+          setLastSyncTime(new Date());
+        } catch {
+          // ignore non-json responses
+        }
       }
     } catch (err) {
       console.warn('Sync state connection error:', err);
@@ -197,6 +202,16 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     return `${currentUser.userSubtype || currentUser.name} (${currentUser.name})`;
   };
 
+  // Helper to safely parse JSON responses and avoid Unexpected token HTML errors
+  const safeParseJson = async (res: Response) => {
+    const text = await res.text();
+    try {
+      return JSON.parse(text);
+    } catch {
+      return { error: text && text.trim().startsWith('<') ? 'Kesalahan Server (HTML 404/500). Silakan muat ulang halaman.' : (text || 'Gagal memproses respons server.') };
+    }
+  };
+
   // Actions
   const saveWarga = async (params: {
     id?: string;
@@ -217,7 +232,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
           tanggal: getRealtimeDateTimeIndo()
         })
       });
-      const data = await res.json();
+      const data = await safeParseJson(res);
       if (!res.ok) {
         setError(data.error || 'Gagal menyimpan data donasi warga');
         return { success: false, error: data.error };
@@ -240,7 +255,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ id, actor: getActorName() })
       });
-      const data = await res.json();
+      const data = await safeParseJson(res);
       if (!res.ok) {
         setError(data.error || 'Gagal menghapus data warga');
         return { success: false, error: data.error };
@@ -271,7 +286,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
           tanggal: getRealtimeDateTimeIndo()
         })
       });
-      const data = await res.json();
+      const data = await safeParseJson(res);
       if (!res.ok) {
         setError(data.error || 'Gagal menyimpan donasi suka rela');
         return { success: false, error: data.error };
@@ -294,7 +309,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ id, actor: getActorName() })
       });
-      const data = await res.json();
+      const data = await safeParseJson(res);
       if (!res.ok) {
         setError(data.error || 'Gagal menghapus');
         return { success: false, error: data.error };
@@ -325,7 +340,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
           tanggal: getRealtimeDateTimeIndo()
         })
       });
-      const data = await res.json();
+      const data = await safeParseJson(res);
       if (!res.ok) {
         setError(data.error || 'Gagal menyimpan pengeluaran');
         return { success: false, error: data.error };
@@ -348,7 +363,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ id, actor: getActorName() })
       });
-      const data = await res.json();
+      const data = await safeParseJson(res);
       if (!res.ok) {
         setError(data.error || 'Gagal menghapus');
         return { success: false, error: data.error };
@@ -370,7 +385,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ target, actor: getActorName() })
       });
-      const data = await res.json();
+      const data = await safeParseJson(res);
       if (!res.ok) {
         setError(data.error || 'Gagal mengubah target iuran');
         return { success: false, error: data.error };
@@ -397,7 +412,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ ...userData, actor: getActorName() })
       });
-      const data = await res.json();
+      const data = await safeParseJson(res);
       if (!res.ok) {
         setError(data.error || 'Gagal membuat akun');
         return { success: false, error: data.error };
@@ -419,7 +434,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ id, actor: getActorName() })
       });
-      const data = await res.json();
+      const data = await safeParseJson(res);
       if (!res.ok) {
         setError(data.error || 'Gagal menghapus akun');
         return { success: false, error: data.error };
