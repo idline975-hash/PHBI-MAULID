@@ -57,11 +57,11 @@ const MainLayout: React.FC = () => {
         {!currentUser ? (
           <LoginScreen />
         ) : currentUser.role === 'admin' ? (
-          <DashboardAdmin onOpenReportModal={(type) => setActiveReport(type)} />
+          <DashboardAdmin onOpenReportModal={(type) => setActiveReport(type as ReportType)} />
         ) : currentUser.role === 'bendahara' ? (
-          <DashboardBendahara onOpenReportModal={(type) => setActiveReport(type)} />
+          <DashboardBendahara onOpenReportModal={(type) => setActiveReport(type as ReportType)} />
         ) : (
-          <DashboardUsser onOpenReportModal={(type) => setActiveReport(type)} />
+          <DashboardUsser onOpenReportModal={(type) => setActiveReport(type as ReportType)} />
         )}
       </main>
 

@@ -8,7 +8,8 @@ const __dirname = path.dirname(__filename);
 
 const app = express();
 const PORT = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
-const DATA_DIR = path.join(__dirname, 'data');
+const isProduction = process.env.NODE_ENV === 'production';
+const DATA_DIR = isProduction ? path.join('/tmp', 'data') : path.join(__dirname, 'data');
 const DB_FILE = path.join(DATA_DIR, 'database.json');
 
 app.use(express.json());
@@ -62,7 +63,7 @@ interface UserAccount {
   username: string;
   name: string;
   role: 'usser' | 'bendahara' | 'admin';
-  userSubtype: 'Usser 1' | 'Usser 2' | 'Usser 3' | 'Bendahara' | 'Admin';
+  userSubtype: 'Usser 1 - RT 08' | 'Usser 2 - RT 09' | 'Usser 3 - RT 10' | 'Usser 1' | 'Usser 2' | 'Usser 3' | 'Bendahara' | 'Admin';
   password: string;
   createdAt: string;
 }
@@ -161,35 +162,43 @@ function loadDatabase(): AppDatabase {
     if (!fs.existsSync(DATA_DIR)) {
       fs.mkdirSync(DATA_DIR, { recursive: true });
     }
-    if (fs.existsSync(DB_FILE)) {
-      const content = fs.readFileSync(DB_FILE, 'utf-8');
-      const parsed = JSON.parse(content);
-      // Ensure admin 'riyan' is always present
-      if (!parsed.users || !parsed.users.some((u: UserAccount) => u.username.toLowerCase() === 'riyan')) {
-        parsed.users = [...(parsed.users || []), DEFAULT_STATE.users[0]];
+    if (!fs.existsSync(DB_FILE)) {
+      const sourceDb = path.join(__dirname, 'data', 'database.json');
+      if (fs.existsSync(sourceDb)) {
+        try {
+          const content = fs.readFileSync(sourceDb, 'utf-8');
+          fs.writeFileSync(DB_FILE, content, 'utf-8');
+        } catch {
+          fs.writeFileSync(DB_FILE, JSON.stringify(DEFAULT_STATE, null, 2), 'utf-8');
+        }
+      } else {
+        fs.writeFileSync(DB_FILE, JSON.stringify(DEFAULT_STATE, null, 2), 'utf-8');
       }
-
-      // Upgrade existing usser 1, 2, 3 accounts to RT 08, RT 09, RT 10
-      if (Array.isArray(parsed.users)) {
-        parsed.users.forEach((u: any) => {
-          if (u.username === 'usser1' || u.userSubtype === 'Usser 1') {
-            u.name = 'Usser 1 - RT 08';
-            u.userSubtype = 'Usser 1 - RT 08';
-          } else if (u.username === 'usser2' || u.userSubtype === 'Usser 2') {
-            u.name = 'Usser 2 - RT 09';
-            u.userSubtype = 'Usser 2 - RT 09';
-          } else if (u.username === 'usser3' || u.userSubtype === 'Usser 3') {
-            u.name = 'Usser 3 - RT 10';
-            u.userSubtype = 'Usser 3 - RT 10';
-          }
-        });
-      }
-
-      return { ...DEFAULT_STATE, ...parsed };
-    } else {
-      fs.writeFileSync(DB_FILE, JSON.stringify(DEFAULT_STATE, null, 2), 'utf-8');
-      return DEFAULT_STATE;
     }
+    const content = fs.readFileSync(DB_FILE, 'utf-8');
+    const parsed = JSON.parse(content);
+    // Ensure admin 'riyan' is always present
+    if (!parsed.users || !parsed.users.some((u: UserAccount) => u.username.toLowerCase() === 'riyan')) {
+      parsed.users = [...(parsed.users || []), DEFAULT_STATE.users[0]];
+    }
+
+    // Upgrade existing usser 1, 2, 3 accounts to RT 08, RT 09, RT 10
+    if (Array.isArray(parsed.users)) {
+      parsed.users.forEach((u: any) => {
+        if (u.username === 'usser1' || u.userSubtype === 'Usser 1') {
+          u.name = 'Usser 1 - RT 08';
+          u.userSubtype = 'Usser 1 - RT 08';
+        } else if (u.username === 'usser2' || u.userSubtype === 'Usser 2') {
+          u.name = 'Usser 2 - RT 09';
+          u.userSubtype = 'Usser 2 - RT 09';
+        } else if (u.username === 'usser3' || u.userSubtype === 'Usser 3') {
+          u.name = 'Usser 3 - RT 10';
+          u.userSubtype = 'Usser 3 - RT 10';
+        }
+      });
+    }
+
+    return { ...DEFAULT_STATE, ...parsed };
   } catch (err) {
     console.error('Error loading database:', err);
     return DEFAULT_STATE;
